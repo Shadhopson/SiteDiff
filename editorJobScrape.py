@@ -15,7 +15,7 @@ def getManyHTML(siteList):
         siteHtml = editorSite.read()
         editorSite.close()
         soup = BeautifulSoup(siteHtml, "lxml")
-        totalSoup.append(unicode(soup))
+        totalSoup.append(unicode(soup.get_text()))
     return totalSoup
 
 
