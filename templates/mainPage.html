@@ -1,0 +1,64 @@
+<html>
+<head runat="server">
+    <style>
+        body{background-color:moccasin;}
+    </style>
+    <script language="javascript" type = "text/javascript">
+        var xmlHttpRequest;
+       
+         function coolFunction(evt){
+
+            document.getElementById('cool').innerHTML = "Meow!"
+            
+            //create XMLHttpRequest object
+            xmlHttpRequest = (window.XMLHttpRequest) ? new XMLHttpRequest(): new ActiveXObject("Msxml2.XMLHTTP");
+            //if browser doesn't support Ajax, exit.
+            document.getElementById('cool').innerHTML = "Megw!"
+            if (xmlHttpRequest == null){
+                document.getElementById('cool').innerHTML = "Megidcasw!"
+                return;}
+            document.getElementById('cool').innerHTML = "Meadaffgw!"
+            var beginDateBox = document.getElementById("date");
+            var beginDate = beginDateBox.options[beginDateBox.selectedIndex].innerHTML; 
+            var websiteBox = document.getElementById("company");
+            var website = websiteBox.options[websiteBox.selectedIndex].innerHTML;
+            var requestSite = "siteInfo/"+beginDate+"/"+website;
+            xmlHttpRequest.open("GET",requestSite,true);
+            //setup the callback function
+            document.getElementById('cool').innerHTML = "M!"
+            xmlHttpRequest.onreadystatechange = stateChange;
+            
+            //Send the Ajax request to the server with post data
+            xmlHttpRequest.send(null);
+            document.getElementById('cool').innerHTML = "Mdssegw!"
+            evt.preventDefault();            
+        }
+        function stateChange(){
+            if(xmlHttpRequest.readyState == 4){
+                var dateBox = document.getElementById("date");
+                var dateValue = dateBox.options[dateBox.selectedIndex].value;
+                document.getElementById('cool').innerHTML = xmlHttpRequest.responseText;
+            }   
+        }
+    </script>
+<body>
+Welcome to the Super Easy Change Finder! 
+<form>
+    <select id ="date" name ="date">
+    {% set descDates = jobDates[-2::-1] %}    
+    {% for days in descDates %} 
+        <option>{{days[0]}}</option>
+    {% endfor %}
+    </select>
+
+    <select id ="company" name="company">
+        {% for site in jobSites %}
+        <option>{{site[0]}}</option>
+        {% endfor %}
+    </select> 
+    <button type="button" value="Submit" onclick ="coolFunction()" >Click!</button>
+    <div id ="cool">
+    <div>
+</form>
+</body>
+</html>
