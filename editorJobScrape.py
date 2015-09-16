@@ -1,4 +1,5 @@
 import urllib2
+import difflib
 import time
 import re
 from bs4 import BeautifulSoup
@@ -38,15 +39,14 @@ def getHtmlOnDate(SQLcursor,website,date):
 def compareDatesHtml(SQLcursor,website, oldDate, newDate):
     oldHtml = getHtmlOnDate(SQLcursor,website,oldDate)
     newHtml = getHtmlOnDate(SQLcursor,website,newDate)
-    oldHtml = oldHtml.split("\n")
-    newHtml = newHtml.split("\n")
+    #oldHtml = oldHtml.split("\n")
+    #newHtml = newHtml.split("\n")
     htmlDiff =[]
-    for line in newHtml:
-        if len(line)<5:
-            continue
-        if (line not in oldHtml):
-            htmlDiff.append(line.strip())
-    return "<br>".join(htmlDiff)
+    diff = difflib.ndiff(oldHtml,newHtml)
+    delta = "".join(x[2:] for x in diff if x.startswith('+ '))
+    print delta
+    print type(oldHtml)
+    return "<br>".join(delta)
     
 def main():
     today =time.strftime("%b%d%Y")
@@ -59,7 +59,7 @@ def main():
         sitesHtmls = getManyHTML(EDITORSITELIST)
         dataList = makeSQLData(EDITORSITENAMES,EDITORSITELIST,sitesHtmls,today)
         saveAsSQL(cur,dataList)
-        compareDatesHtml(cur,"macmillain","Sep092015",today)
+        compareDatesHtml(cur,"macmillain","Sep102015",today)
 
 
 if __name__ == '__main__':
