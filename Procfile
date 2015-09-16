@@ -1,1 +1,1 @@
-web: python diffSitev.py
+web: gunicorn diffSitev:app --log-file=-
