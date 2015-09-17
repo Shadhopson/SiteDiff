@@ -44,9 +44,9 @@ def compareDatesHtml(SQLcursor,website, oldDate, newDate):
     htmlDiff =[]
     diff = difflib.ndiff(oldHtml,newHtml)
     delta = "".join(x[2:] for x in diff if x.startswith('+ '))
-    print delta
-    print type(oldHtml)
-    return "<br>".join(delta)
+    #print delta
+    #print type(oldHtml)
+    return delta.replace('\n','<br>')
     
 def main():
     today =time.strftime("%b%d%Y")
