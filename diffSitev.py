@@ -16,7 +16,6 @@ def form():
         job_sites = cur.fetchall()
         cur.execute("SELECT DISTINCT Date FROM Jerbs")
         job_dates = cur.fetchall()
-    cat = "meow"
     return render_template('mainPage.html',jobSites = job_sites, jobDates = job_dates)
 
 @app.route('/siteInfo/<date>/<website>')
@@ -28,17 +27,7 @@ def changes(date,website):
         HTMLDiff = compareDatesHtml(cur,website,date,today)
     return '<h1>'+website+'</h1>'+'<br>'+ HTMLDiff
 
-@app.route("/nate")
-def nate():
-    #awesomeString = ""
-    #for num in range(0,50):
-    #    awesomeString = awesomeString + " Is Great"
-    today =time.strftime("%b%d%Y")
-    con = lite.connect("editorJobs.db")
-    with con:
-        cur = con.cursor()
-        HTMLDiff = compareDatesHtml(cur,"mediabistro","Sep122015",today)
-    return '<h1>'+EDITORSITENAMES[0]+'</h1>'+'<br>'+ str( HTMLDiff)
+
 if __name__ == "__main__":
     port = int(os.environ.get("PORT",5000))
     app.run(host ='0.0.0.0')
